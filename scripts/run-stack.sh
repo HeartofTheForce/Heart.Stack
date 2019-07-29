@@ -13,7 +13,7 @@ curl --request POST \
 		"timeFieldName": "@timestamp"
 	}
 }' >/dev/null
-echo "Stack Ready. View logs http://localhost:5601/app/kibana#/discover"
+echo -e "\e[32mStack Ready\e[0m. View logs http://localhost:5601/app/kibana#/discover"
 echo "Press enter to clean up..."
 read -n 1 -s -r -p ""
 docker-compose down
