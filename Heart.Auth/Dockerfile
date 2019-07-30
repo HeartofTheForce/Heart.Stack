@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build-env
 WORKDIR /app
 
-RUN git clone https://github.com/HeartofTheForce/Heart.Auth.git
+RUN git clone --single-branch --branch master https://github.com/HeartofTheForce/Heart.Auth.git
 
 RUN dotnet publish -c Release -o out ./Heart.Auth/Heart.Auth.Api
 
