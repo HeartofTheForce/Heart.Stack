@@ -1,9 +1,14 @@
 version: '3'
 services:
   auth:
-    build: ./Heart.Auth
+    build: https://github.com/HeartofTheForce/Heart.Auth.git
     ports:
       - 5000:80
+
+  tictactoe:
+    build: https://github.com/HeartofTheForce/Heart.TicTacToe.git
+    ports:
+      - 5001:80
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.3.0
