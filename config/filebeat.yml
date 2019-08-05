@@ -17,8 +17,8 @@ processors:
       when:
         or:
           - equals:
-              container.image.name : "docker.elastic.co/kibana/kibana:7.2.0"
+              container.image.name : "docker.elastic.co/kibana/kibana:7.3.0"
           - equals:
-              container.image.name : "docker.elastic.co/elasticsearch/elasticsearch:7.2.0"
+              container.image.name : "docker.elastic.co/elasticsearch/elasticsearch:7.3.0"
           - equals:
-              container.image.name : "docker.elastic.co/beats/filebeat:7.2.0"
+              container.image.name : "docker.elastic.co/beats/filebeat:7.3.0"

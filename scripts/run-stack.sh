@@ -7,7 +7,7 @@ echo "Setting Index Pattern..."
 curl --request POST \
   --url http://localhost:5601/api/saved_objects/index-pattern/618f3ea0-b256-11e9-9c4d-73f7dc7fa305 \
   --header 'content-type: application/json' \
-  --header 'kbn-version: 7.2.0' \
+  --header 'kbn-version: 7.3.0' \
   --data '{
 	"attributes": {
 		"title": "filebeat-*",
