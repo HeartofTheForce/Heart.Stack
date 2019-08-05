@@ -1,0 +1,24 @@
+filebeat.inputs:
+- type: container
+  paths:
+    - '/var/lib/docker/containers/*/*.log'
+
+setup.template.fields: "/usr/share/filebeat/fields.yml"
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+
+processors:
+  - add_docker_metadata: ~
+  - decode_json_fields:
+     fields: ["message"]
+     target: "message-json"
+  - drop_event:
+      when:
+        or:
+          - equals:
+              container.image.name : "docker.elastic.co/kibana/kibana:7.3.0"
+          - equals:
+              container.image.name : "docker.elastic.co/elasticsearch/elasticsearch:7.3.0"
+          - equals:
+              container.image.name : "docker.elastic.co/beats/filebeat:7.3.0"
