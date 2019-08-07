@@ -9,6 +9,12 @@ services:
     build: https://github.com/HeartofTheForce/Heart.TicTacToe.git
     ports:
       - 5001:80
+      
+  tictactoeclient:
+    build: https://github.com/HeartofTheForce/Heart.TicTacToe.Client.git#feature/init
+    environment:
+      - AUTH_URL=http://auth
+      - TICTACTOE_URL=http://tictactoe
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.3.0

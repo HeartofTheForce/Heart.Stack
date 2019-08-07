@@ -1,7 +1,7 @@
 #!/bin/bash
 docker-compose rm
 docker-compose build --no-cache
-docker-compose up -d
+docker-compose up -d --scale tictactoeclient=3
 while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:5601/api/status)" != "200" ]]; do sleep 5; echo "Waiting for Kibana..."; done
 echo "Setting Index Pattern..."
 curl --request POST \
