@@ -4,13 +4,21 @@ services:
     build: https://github.com/HeartofTheForce/Heart.Auth.git
     ports:
       - 5000:80
+    volumes:
+      - ./config/rsa_private.pem:/app/rsa_private.pem:ro
+      - ./config/rsa_public.pem:/app/rsa_public.pem:ro
 
   tictactoe:
     build: https://github.com/HeartofTheForce/Heart.TicTacToe.git
     ports:
       - 5001:80
+    volumes:
+      - ./config/rsa_public.pem:/app/rsa_public.pem:ro
       
-  tictactoeclient:
+  tictactoe-client:
+    depends_on:
+      - auth
+      - tictactoe
     build: https://github.com/HeartofTheForce/Heart.TicTacToe.Client.git#feature/init
     environment:
       - AUTH_URL=http://auth
