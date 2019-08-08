@@ -1,11 +1,13 @@
 #!/bin/bash
 docker-compose rm
 docker-compose build --no-cache
-docker-compose up -d --scale tictactoe-client=6
+docker-compose up -d --scale tictactoe-client=12
 while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:5601/api/status)" != "200" ]]; do sleep 5; echo "Waiting for Kibana..."; done
-echo "Setting Index Pattern..."
+echo -e "\e[32mImporting Kibana Objects\e[0m..."
 curl -X POST "localhost:5601/api/saved_objects/_import" -H "kbn-xsrf: true" --form file=@config/export.ndjson >/dev/null
-echo -e "\e[32mStack Ready\e[0m. View logs http://localhost:5601/app/kibana#/discover"
+echo -e "\e[32mStack Ready\e[0m."
+echo -e "View Dashboard http://localhost:5601/app/kibana#/dashboard/6335ded0-b95e-11e9-88b1-030f8b6a784d?_g=()"
+echo -e "View Logs http://localhost:5601/app/kibana#/discover"
 echo "Press enter to clean up..."
 read -n 1 -s -r -p ""
 docker-compose down --rmi 'local'
