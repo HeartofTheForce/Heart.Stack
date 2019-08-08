@@ -9,7 +9,7 @@ services:
       - ./config/rsa_public.pem:/app/rsa_public.pem:ro
 
   tictactoe:
-    build: https://github.com/HeartofTheForce/Heart.TicTacToe.git#feature/more-logs
+    build: https://github.com/HeartofTheForce/Heart.TicTacToe.git
     ports:
       - 5001:80
     volumes:
@@ -19,7 +19,7 @@ services:
     depends_on:
       - auth
       - tictactoe
-    build: https://github.com/HeartofTheForce/Heart.TicTacToe.Client.git#feature/init
+    build: https://github.com/HeartofTheForce/Heart.TicTacToe.Client.git
     environment:
       - AUTH_URL=http://auth
       - TICTACTOE_URL=http://tictactoe
