@@ -19,7 +19,7 @@ services:
     depends_on:
       - auth
       - tictactoe
-    build: https://github.com/HeartofTheForce/Heart.TicTacToe.Client.git#feature/init
+    build: https://github.com/HeartofTheForce/Heart.TicTacToe.Client.git
     environment:
       - AUTH_URL=http://auth
       - TICTACTOE_URL=http://tictactoe
