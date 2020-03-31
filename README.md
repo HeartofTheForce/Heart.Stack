@@ -7,7 +7,7 @@
 - [Elasticsearch](https://www.elastic.co/products/elasticsearch)
 - [Filebeat](https://www.elastic.co/products/beats/filebeat)
 
-Simulating a micro service stack with easily accessible logging and health tracking.
+Simulating a microservice stack with easily accessible logging and health tracking.
 ![Dashboard](https://media.giphy.com/media/L1cMImqZSWXsA9s3Bm/giphy.gif)
 # What is Heart.*
 The `Heart.*` series is a collection of reference implementations of various technologies and concepts that I feel are worth exploring.
