@@ -8,6 +8,8 @@ namespace TicTacToe.Db
     public class TicTacToeDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<ApplicationUser> ApplicationUsers { get; set; } = default!;
+        public DbSet<Game> Games { get; set; } = default!;
+        public DbSet<MatchmakingEntry> MatchmakingEntries { get; set; } = default!;
 
         public TicTacToeDbContext(DbContextOptions<TicTacToeDbContext> options)
            : base(options)
@@ -18,6 +20,8 @@ namespace TicTacToe.Db
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new ApplicationUserConfig());
+            modelBuilder.ApplyConfiguration(new GameConfiguration());
+            modelBuilder.ApplyConfiguration(new MatchmakingEntryConfiguration());
         }
     }
 }

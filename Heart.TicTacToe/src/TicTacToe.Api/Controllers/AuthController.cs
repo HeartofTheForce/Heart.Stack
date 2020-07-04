@@ -6,7 +6,7 @@ using TicTacToe.Api.Models.Users;
 
 namespace TicTacToe.Api.Controllers
 {
-    public class AuthController : BaseController
+    public class AuthController : ControllerPlus
     {
         private readonly IUserManager _userManager;
 

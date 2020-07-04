@@ -27,6 +27,7 @@ namespace TicTacToe.Api
             services.ConfigureDb(ticTacToeSettings);
             services.ConfigureAuth(authSettings);
             services.ConfigureUsers();
+            services.ConfigureTicTacToe();
 
             services.AddSwaggerDocument(config =>
             {

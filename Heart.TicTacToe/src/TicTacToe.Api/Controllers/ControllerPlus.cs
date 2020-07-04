@@ -6,7 +6,7 @@ using TicTacToe.Api.Models;
 
 namespace TicTacToe.Api.Controllers
 {
-    public class BaseController : ControllerBase
+    public class ControllerPlus : ControllerBase
     {
         private ClaimsUser? _claimsUser;
         public ClaimsUser ClaimsUser
