@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TicTacToe.Db\TicTacToe.Db.csproj" />
+    <ProjectReference Include="../TicTacToe.Db/TicTacToe.Db.csproj" />
   </ItemGroup>
 
   <ItemGroup>

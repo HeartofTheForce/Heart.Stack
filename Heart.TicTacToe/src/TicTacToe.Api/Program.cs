@@ -1,9 +1,12 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Formatting.Compact;
 using Serilog.Formatting.Json;
+using TicTacToe.Db;
 
 namespace TicTacToe.Api
 {
@@ -17,9 +20,16 @@ namespace TicTacToe.Api
             {
                 Log.Information("Starting web host");
 
-                CreateHostBuilder(args)
-                    .Build()
-                    .Run();
+                var host = CreateHostBuilder(args)
+                    .Build();
+
+                using (var scope = host.Services.CreateScope())
+                {
+                    var dbContext = scope.ServiceProvider.GetRequiredService<TicTacToeDbContext>();
+                    dbContext.Database.Migrate();
+                }
+
+                host.Run();
 
                 return 0;
             }

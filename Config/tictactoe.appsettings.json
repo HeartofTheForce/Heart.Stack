@@ -1,0 +1,22 @@
+{
+  "TicTacToe": {
+    "ConnectionString": "Data Source=tcp:db,1433;Initial Catalog=master;Persist Security Info=False;User ID=sa;Password=yourStrong(!)Password;MultipleActiveResultSets=False;Connect Timeout=30;",
+    "StaleInMinutes": 5,
+    "MatchmakingIntervalInSeconds": 10,
+    "MatchmakingTimeoutInMinutes": 1
+  },
+  "Auth": {
+    "PrivateKey": "EbUoamp1eDbIteTZCojCD0nC51yxZ9Su",
+    "Issuer": "localhost",
+    "Audience": "localhost",
+    "ExpireInMinutes": 5
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*"
+}

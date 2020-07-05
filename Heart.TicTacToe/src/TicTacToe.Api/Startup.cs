@@ -39,12 +39,8 @@ namespace TicTacToe.Api
             });
         }
 
-        public void Configure(
-            IApplicationBuilder app,
-            IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app)
         {
-            serviceProvider.GetRequiredService<TicTacToeDbContext>().Database.Migrate();
-
             app.UseHttpsRedirection();
 
             app.UseOpenApi();
