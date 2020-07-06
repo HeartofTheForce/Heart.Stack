@@ -56,8 +56,6 @@ export class Bot {
     const accessToken = loginResponse.accessToken;
 
     this.user = { Id: userId, AccessToken: accessToken };
-
-    console.log(this.user);
   }
 
   async gameLoop() {
