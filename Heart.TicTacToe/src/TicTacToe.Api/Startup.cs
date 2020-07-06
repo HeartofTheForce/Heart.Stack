@@ -41,8 +41,6 @@ namespace TicTacToe.Api
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseHttpsRedirection();
-
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
