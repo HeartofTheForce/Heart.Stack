@@ -1,5 +1,6 @@
 import dotnet from "dotenv";
 import { Bot } from "./bot";
+import { logger } from "./logger";
 
 dotnet.config();
 
@@ -10,6 +11,14 @@ for (let i = 0; i < Number(process.env.BOT_COUNT); i++) {
   bots.push(bot);
 }
 
+const requestBuffer = 1000;
+
+function sleep(ms: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 const coreLoop = async () => {
   while (true) {
     const promises = [];
@@ -18,7 +27,14 @@ const coreLoop = async () => {
       promises.push(bot.gameLoop());
     }
 
-    await Promise.all(promises);
+    await Promise.all(promises).catch((e) => {
+      logger.error("coreLoop error", {
+        details: {
+          exception: e,
+        },
+      });
+    });
+    await sleep(requestBuffer);
   }
 };
 

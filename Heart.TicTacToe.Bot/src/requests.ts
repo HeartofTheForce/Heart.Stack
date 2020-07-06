@@ -9,7 +9,7 @@ export const register = (email: string, password: string) => {
       password: password,
       alias: email,
     }),
-  });
+  }).then((res) => res.json());
 };
 
 export const login = (email: string, password: string) => {

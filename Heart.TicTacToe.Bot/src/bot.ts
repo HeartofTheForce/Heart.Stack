@@ -2,14 +2,6 @@ import faker from "faker";
 import { logger } from "./logger";
 import { login, getGame, joinQueue, register, takeTurn } from "./requests";
 
-const requestBuffer = 1000;
-
-function sleep(ms: number) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
 interface UserContext {
   Id: string;
   AccessToken: string;
@@ -21,30 +13,27 @@ export class Bot {
 
   private gameId: string | undefined;
 
-  private user?: UserContext;
+  private userId: string | undefined;
+  private accessToken: string | undefined;
 
   constructor() {
     this.email = faker.internet.email();
     this.password = "superPASSWORD123*#";
 
     this.gameLoop = this.gameLoop.bind(this);
-
-    this.setup();
   }
 
   async setup() {
-    let registerResponse;
-    do {
+    if (!this.userId) {
       logger.info("registering", {
         details: {
           email: this.email,
           password: this.password,
         },
       });
-
-      registerResponse = await register(this.email, this.password);
-    } while (!registerResponse.ok);
-    const userId = (await registerResponse.json()).id;
+      const registerResponse = await register(this.email, this.password);
+      this.userId = registerResponse.id;
+    }
 
     logger.info("logging in", {
       details: {
@@ -53,31 +42,29 @@ export class Bot {
       },
     });
     let loginResponse = await login(this.email, this.password);
-    const accessToken = loginResponse.accessToken;
-
-    this.user = { Id: userId, AccessToken: accessToken };
+    this.accessToken = loginResponse.accessToken;
   }
 
   async gameLoop() {
-    if (!this.user) return sleep(requestBuffer);
+    if (!this.userId || !this.accessToken) return this.setup();
 
-    logger.info("joining queue", { userId: this.user.Id });
-    const joinQueueResponse = await joinQueue(this.user.AccessToken);
+    logger.info("joining queue", { userId: this.userId });
+    const joinQueueResponse = await joinQueue(this.accessToken);
     this.gameId = joinQueueResponse.gameId;
-    if (!this.gameId) return sleep(requestBuffer);
+    if (!this.gameId) return;
 
-    let currentGame = await getGame(this.gameId, this.user.AccessToken);
+    let currentGame = await getGame(this.gameId, this.accessToken);
     logger.info("get game", {
       details: {
         gameId: this.gameId,
-        userId: this.user.Id,
+        userId: this.userId,
         response: currentGame,
       },
     });
 
     if (currentGame.gameState != "InProgress") return;
 
-    if (currentGame.currentTurnPlayer == this.user.Id) {
+    if (currentGame.currentTurnPlayer == this.userId) {
       const possibleMoves = [];
 
       let xIndex = 0;
@@ -103,17 +90,17 @@ export class Bot {
           this.gameId,
           randomMove.x,
           randomMove.y,
-          this.user.AccessToken
+          this.accessToken
         );
 
         logger.info("take turn", {
           details: {
             gameId: this.gameId,
-            userId: this.user.Id,
+            userId: this.userId,
             response: currentGame,
           },
         });
       }
-    } else return sleep(requestBuffer);
+    } else return;
   }
 }
