@@ -3,9 +3,9 @@ WORKDIR /app
 
 COPY ./src/TicTacToe.Api/TicTacToe.Api.csproj ./src/TicTacToe.Api/TicTacToe.Api.csproj
 COPY ./src/TicTacToe.Db/TicTacToe.Db.csproj ./src/TicTacToe.Db/TicTacToe.Db.csproj
-COPY ./src/TicTacToe.UTests/TicTacToe.UTests.csproj ./src/TicTacToe.UTests/TicTacToe.UTests.csproj
-
 RUN dotnet restore ./src/TicTacToe.Api
+
+COPY ./src/TicTacToe.UTests/TicTacToe.UTests.csproj ./src/TicTacToe.UTests/TicTacToe.UTests.csproj
 RUN dotnet restore ./src/TicTacToe.UTests
 
 COPY . .
