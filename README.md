@@ -1,5 +1,5 @@
 # What is Heart.Stack?
-`Heart.Stack` is a mock service stack, using various technologies to create a secure, monitorable and healthy service.
+`Heart.Stack` is a mock service stack, with a focus on maintainability, monitoring, security and stability.
 
 # Built On
 - [.NET Core](https://dotnet.microsoft.com/download/dotnet-core)
