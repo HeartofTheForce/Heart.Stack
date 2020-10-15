@@ -1,4 +1,4 @@
-# What is Heart.Stack?
+# Heart.Stack
 `Heart.Stack` is a mock service stack, with a focus on maintainability, monitoring, security and stability.
 
 # Built On
