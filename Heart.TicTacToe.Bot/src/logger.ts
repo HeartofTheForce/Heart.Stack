@@ -1,9 +1,11 @@
 import winston from "winston";
 
-const serilog = winston.format((info) => {
+const serilog = winston.format((info: any) => {
+  info["@mt"] = info.message;
   info["@l"] = info.level;
   info["@t"] = info.timestamp;
 
+  delete info.message;
   delete info.level;
   delete info.timestamp;
 

@@ -2,6 +2,7 @@ filebeat.inputs:
   - type: container
     paths:
       - "/var/lib/docker/containers/*/*.log"
+    json.keys_under_root: false
 
 setup.template.fields: "/usr/share/filebeat/fields.yml"
 
@@ -10,18 +11,12 @@ output.elasticsearch:
 
 processors:
   - add_docker_metadata: ~
-  - decode_json_fields:
-      fields: ["message"]
-      target: "customDimensions"
-  - if:
-      has_fields: ["customDimensions.@mt"]
-    then:
-      - drop_fields:
-          fields: ["message"]
-      - rename:
-          fields:
-            - from: "customDimensions.@mt"
-              to: "message"
+  - copy_fields:
+      fields:
+        - from: "json.@mt"
+          to: "message"
+      ignore_missing: true
+      fail_on_error: true
   - drop_event:
       when:
         or:
