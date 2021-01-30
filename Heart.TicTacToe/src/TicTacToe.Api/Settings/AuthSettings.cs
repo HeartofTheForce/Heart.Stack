@@ -2,7 +2,8 @@ namespace TicTacToe.Api.Settings
 {
     public class AuthSettings
     {
-        public const string TokenProvider = "TicTacToe";
+        public const string RefreshTokenProvider = "TicTacToe.RefreshTokenProvider";
+        public const string RefreshTokenName = "TicTacToe.RefreshToken";
 
         public string PrivateKey { get; set; } = default!;
         public string Issuer { get; set; } = default!;

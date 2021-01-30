@@ -76,9 +76,9 @@ namespace TicTacToe.Api.Logic.Users
 
                 if (signInResult.Succeeded)
                 {
-                    await _userManager.RemoveAuthenticationTokenAsync(user, AuthSettings.TokenProvider, "RefreshToken");
-                    string newRefreshToken = await _userManager.GenerateUserTokenAsync(user, AuthSettings.TokenProvider, "RefreshToken");
-                    await _userManager.SetAuthenticationTokenAsync(user, AuthSettings.TokenProvider, "RefreshToken", newRefreshToken);
+                    await _userManager.RemoveAuthenticationTokenAsync(user, AuthSettings.RefreshTokenProvider, AuthSettings.RefreshTokenName);
+                    string newRefreshToken = await _userManager.GenerateUserTokenAsync(user, AuthSettings.RefreshTokenProvider, AuthSettings.RefreshTokenName);
+                    await _userManager.SetAuthenticationTokenAsync(user, AuthSettings.RefreshTokenProvider, AuthSettings.RefreshTokenName, newRefreshToken);
 
                     string accessToken = _jwtGenerator.GenerateToken(user, out var expires);
                     var output = new AuthResponse(accessToken, newRefreshToken, expires);
@@ -104,12 +104,16 @@ namespace TicTacToe.Api.Logic.Users
 
             return ReasonResult<AuthResponse>.BadRequest(new Reason[] { new Reason("UserNotFound", "Cannot find User") });
         }
+
         public async Task<ReasonResult<AuthResponse>> LoginWithRefreshTokenAsync(LoginRefreshTokenModel inputModel)
         {
             var query = (
                 from userToken in _dbContext.UserTokens
                 join applicationUser in _dbContext.ApplicationUsers on userToken.UserId equals applicationUser.Id
-                where userToken.Value == inputModel.RefreshToken
+                where
+                    userToken.LoginProvider == AuthSettings.RefreshTokenProvider &&
+                    userToken.Name == AuthSettings.RefreshTokenName &&
+                    userToken.Value == inputModel.RefreshToken
                 select new
                 {
                     ApplicationUser = applicationUser,
@@ -124,7 +128,7 @@ namespace TicTacToe.Api.Logic.Users
             var user = data.ApplicationUser;
             string refreshToken = data.Token.Value;
 
-            bool verify = await _userManager.VerifyUserTokenAsync(user, AuthSettings.TokenProvider, "RefreshToken", refreshToken);
+            bool verify = await _userManager.VerifyUserTokenAsync(user, AuthSettings.RefreshTokenProvider, AuthSettings.RefreshTokenName, refreshToken);
 
             if (!verify)
                 return ReasonResult<AuthResponse>.BadRequest(new Reason[] { new Reason("RefreshTokenInvalid", "Refresh Token is invalid") });

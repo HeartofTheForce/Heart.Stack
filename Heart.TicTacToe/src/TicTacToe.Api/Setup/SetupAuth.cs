@@ -44,7 +44,7 @@ namespace TicTacToe.Api.Setup
                 })
                 .AddEntityFrameworkStores<TicTacToeDbContext>()
                 .AddDefaultTokenProviders()
-                .AddTokenProvider<RefreshTokenProvider>(AuthSettings.TokenProvider)
+                .AddTokenProvider<RefreshTokenProvider>(AuthSettings.RefreshTokenProvider)
             ;
 
             services.Configure<RefreshTokenProviderOptions>(options =>
