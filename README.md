@@ -34,5 +34,5 @@ Run `./scripts/run-stack.sh`
     7 - 00000000001100000000000000000000
     8 - 00000000110000000000000000000000
     9 - 00000001000000000000000000000000
-    Allowing one each slot to be set to 0 indicating that turn has not been taken
+    Each slot has a minimum value of (9 - n) + 1 to allow for 0 to be used to indicate an untaken turn
     ```
