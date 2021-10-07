@@ -65,8 +65,6 @@ namespace TicTacToe.Api.Logic.BoardState
             0b00000000000000000000000001010100,
         };
 
-
-
         public static void ValidateBoardHistory(
             int boardHistory,
             out int currentTurn,
@@ -136,7 +134,13 @@ namespace TicTacToe.Api.Logic.BoardState
                 boardResult = BoardResult.Draw;
         }
 
-        public static bool IsSnapshotInWinningState(int snapshot)
+        public static int SetTurn(int boardHistory, int turn, int deltaIndex)
+        {
+            int trueValue = deltaIndex + 1;
+            return (boardHistory & ~s_turnBits[turn]) | ((trueValue << s_turnShifts[turn]) & s_turnBits[turn]);
+        }
+
+        private static bool IsSnapshotInWinningState(int snapshot)
         {
             for (int i = 0; i < s_winningStates.Length; i++)
             {
@@ -147,19 +151,13 @@ namespace TicTacToe.Api.Logic.BoardState
             return false;
         }
 
-        public static int GetDeltaIndexByTurn(int boardHistory, int turn)
+        private static int GetDeltaIndexByTurn(int boardHistory, int turn)
         {
             int trueValue = (boardHistory & s_turnBits[turn]) >> s_turnShifts[turn];
             return trueValue - 1;
         }
 
-        public static int SetTurn(int boardHistory, int turn, int deltaIndex)
-        {
-            int trueValue = deltaIndex + 1;
-            return (boardHistory & ~s_turnBits[turn]) | ((trueValue << s_turnShifts[turn]) & s_turnBits[turn]);
-        }
-
-        public static bool IsDeltaIndexOutOfBounds(int turn, int deltaIndex)
+        private static bool IsDeltaIndexOutOfBounds(int turn, int deltaIndex)
         {
             int trueValue = deltaIndex + 1;
             return turn + trueValue > 9 || trueValue < 0;

@@ -9,7 +9,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/src/TicTacToe.Api/bin/Debug/netcoreapp3.1/TicTacToe.Api.dll",
+      "program": "${workspaceFolder}/src/TicTacToe.Api/bin/Debug/net5/TicTacToe.Api.dll",
       "args": [],
       "cwd": "${workspaceFolder}/src/TicTacToe.Api",
       "stopAtEntry": false,

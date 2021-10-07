@@ -14,6 +14,7 @@ services:
     environment:
       - TICTACTOE_URL=http://tictactoe
       - BOT_COUNT=10
+      - REQUEST_BUFFER_MS=100
     depends_on:
       - tictactoe
 

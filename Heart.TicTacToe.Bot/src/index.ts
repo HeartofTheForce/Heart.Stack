@@ -4,14 +4,14 @@ import { logger } from "./logger";
 
 dotnet.config();
 
-const bots: Bot[] = [];
+const requestBufferMs = Number(process.env.REQUEST_BUFFER_MS);
+const botCount = Number(process.env.BOT_COUNT);
 
-for (let i = 0; i < Number(process.env.BOT_COUNT); i++) {
+const bots: Bot[] = [];
+for (let i = 0; i < botCount; i++) {
   const bot = new Bot();
   bots.push(bot);
 }
-
-const requestBuffer = 1000;
 
 function sleep(ms: number) {
   return new Promise((resolve) => {
@@ -34,7 +34,8 @@ const coreLoop = async () => {
         },
       });
     });
-    await sleep(requestBuffer);
+
+    await sleep(requestBufferMs);
   }
 };
 
